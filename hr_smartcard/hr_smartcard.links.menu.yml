@@ -1,0 +1,6 @@
+hr_smartcard.jwttokensettings:
+  title: Smartcard Api COnfiguration Settings
+  route_name: hr_smartcard.jwttokensettings
+  description: 'Enter Smart Card Api Details.'
+  parent: system.admin_config_development
+  weight: 4

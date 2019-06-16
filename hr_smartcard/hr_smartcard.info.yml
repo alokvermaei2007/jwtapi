@@ -1,0 +1,4 @@
+name: Smartcard Integration
+type: module
+description: Module utilize for smart card apii integration
+core: '8.x'
