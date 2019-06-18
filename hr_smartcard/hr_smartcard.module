@@ -32,6 +32,7 @@ function hr_smartcard_form_alter(&$form, FormStateInterface $form_state, $form_i
  * Hook form Submit.
  */
 function hr_smartcard_submit($form, &$form_state) {
+//    echo 'asdas';exit;
     $title_smartcard =  $form_state->getValue('title')[0]['value'];
     $createcard = new \Drupal\hr_smartcard\Controller\TokenCommonFunction($title_smartcard);
    $response = $createcard->smartCardCurl($title_smartcard);
