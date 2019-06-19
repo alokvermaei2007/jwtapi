@@ -11,13 +11,19 @@ class TokenCommonFunction {
      * Create Smart Card
      * @param type $title
      */
-    public function smartCardCurl($title) {
-
+    public function smartCardCurl($title, $fid_url, $url) {
+ 
         $body = array(
             'card' =>
             array(
                 'message' => $title,
                 'content_type' => 'video',
+            ),
+            'resource' =>
+            array(
+                'title' => $title,
+                'url' => $url,
+                'image_url' => $fid_url
             ),
         );
         $encoded_value = json_encode($body);
@@ -85,6 +91,7 @@ class TokenCommonFunction {
         else {
 //            echo $response;
         }
+     
         $decoded_value = json_decode($response);
         $decodetoken = $decoded_value->jwt_token;
         if ($decodetoken) {
@@ -110,6 +117,7 @@ class TokenCommonFunction {
         $signature = hash_hmac('SHA256', "$headers_encoded.$payload_encoded", $key, true);
         $signature_encoded = $this->base64url_encode($signature);
         $token = "$headers_encoded.$payload_encoded.$signature_encoded";
+        
         return $token;
     }
 

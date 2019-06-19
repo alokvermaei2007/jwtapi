@@ -21,7 +21,8 @@ $GLOBALS['api_url'] = $config->get('api_url');
  * Hook Form Alter
  */
 function hr_smartcard_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-    if($form_id == 'node_page_form'){
+//    echo $form_id;exit;
+    if($form_id == 'node_page_form' || $form_id == 'node_page_edit_form' ){
        $form['actions']['submit']['#submit'][] = 'hr_smartcard_submit'; 
     }
  
@@ -32,9 +33,26 @@ function hr_smartcard_form_alter(&$form, FormStateInterface $form_state, $form_i
  * Hook form Submit.
  */
 function hr_smartcard_submit($form, &$form_state) {
-//    echo 'asdas';exit;
+  
+ 
+  $imageids =  $form_state->getValue('field_image')[0]['fids'];
+  if(!empty($imageids)){
+       $fid_url = get_image_url_fids($imageids[0]);
+  }
+  $url =  $form_state->getValue('field_url')[0]['value'];
     $title_smartcard =  $form_state->getValue('title')[0]['value'];
-    $createcard = new \Drupal\hr_smartcard\Controller\TokenCommonFunction($title_smartcard);
-   $response = $createcard->smartCardCurl($title_smartcard);
+    $createcard = new \Drupal\hr_smartcard\Controller\TokenCommonFunction();
+    $response = $createcard->smartCardCurl($title_smartcard,$fid_url,$url);
 //   dump($response);exit;
 }
+
+function get_image_url_fids($id) {
+        $file = File::load($id);
+        if ($file) {
+            $uri = $file->getFileUri();
+        }
+        if ($uri) {
+            $url = file_create_url($uri);
+        }
+        return $url;
+    }
