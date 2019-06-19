@@ -22,6 +22,10 @@ $GLOBALS['api_url'] = $config->get('api_url');
  */
 function hr_smartcard_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 //    echo $form_id;exit;
+ //for generailzed module : pass the machine name of the content type in below condition
+//ex : if($form_id == 'node_page_form' || $form_id == 'node_page_edit_form' || $form_id == 'node_article_form'  )
+
+
     if($form_id == 'node_page_form' || $form_id == 'node_page_edit_form' ){
        $form['actions']['submit']['#submit'][] = 'hr_smartcard_submit'; 
     }
